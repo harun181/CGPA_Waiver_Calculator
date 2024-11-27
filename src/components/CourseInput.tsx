@@ -12,8 +12,8 @@ const GRADES: Grades[] = ['A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'D', 'F']
 
 const CourseInput: React.FC<CourseInputProps> = ({ course, onChange, onDelete }) => {
   return (
-    <div className="flex gap-4 items-center">
-      <div className="flex-1">
+    <div className="flex flex-col sm:flex-row gap-4 items-center">
+      <div className="w-full sm:flex-1">
         <input
           type="text"
           value={course.name}
@@ -22,7 +22,7 @@ const CourseInput: React.FC<CourseInputProps> = ({ course, onChange, onDelete })
           className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
         />
       </div>
-      <div className="w-32">
+      <div className="w-full sm:w-32">
         <select
           value={course.grade}
           onChange={(e) => onChange('grade', e.target.value)}
@@ -36,7 +36,7 @@ const CourseInput: React.FC<CourseInputProps> = ({ course, onChange, onDelete })
           ))}
         </select>
       </div>
-      <div className="w-32">
+      <div className="w-full sm:w-32">
         <input
           type="number"
           value={course.credits}

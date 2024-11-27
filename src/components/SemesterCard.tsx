@@ -1,6 +1,6 @@
 import React from 'react';
 import { X, PlusCircle } from 'lucide-react';
-import { Course, Semester, Grades } from '../types';
+import { Course, Semester } from '../types';
 import { calculateGPA } from '../utils/gradeCalculator';
 import CourseInput from './CourseInput';
 
@@ -22,9 +22,11 @@ const SemesterCard: React.FC<SemesterCardProps> = ({
   const gpa = calculateGPA(semester.courses);
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold text-gray-800">Semester {semester.id}</h2>
+    <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6 mb-6">
+      <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6">
+        <h2 className="text-xl sm:text-2xl font-bold text-gray-800">
+          Semester {semester.id}
+        </h2>
         <button
           onClick={() => onDeleteSemester(semester.id)}
           className="text-gray-400 hover:text-red-500 transition-colors"
@@ -44,7 +46,7 @@ const SemesterCard: React.FC<SemesterCardProps> = ({
         ))}
       </div>
 
-      <div className="mt-6 flex justify-between items-center">
+      <div className="mt-6 flex flex-col sm:flex-row justify-between items-center gap-4">
         <button
           onClick={() => onAddCourse(semester.id)}
           className="flex items-center gap-2 text-indigo-600 hover:text-indigo-800"
