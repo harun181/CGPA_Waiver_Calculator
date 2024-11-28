@@ -2,8 +2,8 @@ import React from 'react';
 
 const GradeTable = () => {
   return (
-    <div className="overflow-x-auto bg-white rounded-lg shadow-md p-4">
-      <table className="min-w-full">
+    <div className="overflow-x-auto bg-white rounded-lg shadow-md p-4 mb-10">
+      <table className="min-w-full text-gray-600">
         <thead>
           <tr className="bg-gray-100">
             <th className="px-4 py-2 text-left">Marks Range</th>

@@ -19,14 +19,14 @@ const CourseInput: React.FC<CourseInputProps> = ({ course, onChange, onDelete })
           value={course.name}
           onChange={(e) => onChange('name', e.target.value)}
           placeholder="Subject Name"
-          className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 outline outline-indigo-300 dark:text-gray-600"
         />
       </div>
       <div className="w-full sm:w-32">
         <select
           value={course.grade}
           onChange={(e) => onChange('grade', e.target.value)}
-          className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 appearance-none bg-white"
+          className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 appearance-none bg-white text-gray-600 outline outline-indigo-300"
         >
           <option value="">Grade</option>
           {GRADES.map((grade) => (
@@ -44,7 +44,7 @@ const CourseInput: React.FC<CourseInputProps> = ({ course, onChange, onDelete })
           placeholder="Credits"
           min="0"
           max="5"
-          className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 outline outline-indigo-300 dark:text-gray-600"
         />
       </div>
       <button

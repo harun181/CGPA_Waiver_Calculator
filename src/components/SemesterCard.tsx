@@ -54,7 +54,7 @@ const SemesterCard: React.FC<SemesterCardProps> = ({
           <PlusCircle size={20} />
           <span>Add Subject</span>
         </button>
-        <p className="text-lg font-semibold">
+        <p className="text-lg font-semibold text-gray-700">
           Semester GPA: <span className="text-indigo-600">{gpa}</span>
         </p>
       </div>
