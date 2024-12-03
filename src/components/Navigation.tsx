@@ -1,9 +1,9 @@
 import React from 'react';
-import { Calculator, GraduationCap } from 'lucide-react';
+import { Calculator, GraduationCap, DollarSign } from 'lucide-react';
 
 interface NavigationProps {
-  activeTab: 'cgpa' | 'waiver';
-  onTabChange: (tab: 'cgpa' | 'waiver') => void;
+  activeTab: 'cgpa' | 'waiver' | 'tuition';
+  onTabChange: (tab: 'cgpa' | 'waiver' | 'tuition') => void;
   isDarkMode: boolean;
 }
 
@@ -11,7 +11,7 @@ const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange, isDarkM
   return (
     <nav className="flex justify-center mb-8">
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-2">
-        <div className="flex space-x-2">
+        <div className="flex flex-wrap justify-center gap-2">
           <button
             onClick={() => onTabChange('cgpa')}
             className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
@@ -33,6 +33,17 @@ const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange, isDarkM
           >
             <Calculator size={20} />
             <span>Waiver Calculator</span>
+          </button>
+          <button
+            onClick={() => onTabChange('tuition')}
+            className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
+              activeTab === 'tuition'
+                ? 'bg-indigo-600 text-white'
+                : 'hover:bg-gray-100 dark:hover:bg-gray-700'
+            }`}
+          >
+            <DollarSign size={20} />
+            <span>Tuition Calculator</span>
           </button>
         </div>
       </div>

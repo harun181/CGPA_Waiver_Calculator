@@ -9,6 +9,7 @@ import PDFMarksheet from './components/PDFMarksheet';
 import ProgressChart from './components/ProgressChart';
 import ScholarshipInfo from './components/ScholarshipInfo';
 import WaiverCalculator from './components/WaiverCalculator';
+import TuitionCalculator from './components/TuitionCalculator';
 import CGPAPredictor from './components/CGPAPredictor';
 import { calculateCGPA, calculateTotalCredits } from './utils/gradeCalculator';
 import { getFeedbackMessage } from './utils/feedback';
@@ -16,7 +17,7 @@ import { getFeedbackMessage } from './utils/feedback';
 const EMPTY_COURSE: Course = { name: '', grade: '', credits: '' };
 
 function App() {
-  const [activeTab, setActiveTab] = useState<'cgpa' | 'waiver'>('cgpa');
+  const [activeTab, setActiveTab] = useState<'cgpa' | 'waiver' | 'tuition'>('cgpa');
   const [semesters, setSemesters] = useState<Semester[]>([
     { id: 1, courses: [{ ...EMPTY_COURSE }] },
   ]);
@@ -106,34 +107,14 @@ function App() {
   );
   const feedback = getFeedbackMessage(cgpa);
 
-  return (
-    <div className={`min-h-screen transition-colors duration-200 ${
-      isDarkMode 
-        ? 'bg-gray-900 text-white' 
-        : 'bg-gradient-to-br from-indigo-100 to-purple-100'
-    }`}>
-      <Toaster position="top-right" />
-      <div className="container mx-auto px-4 py-8 max-w-4xl">
-        <div className="flex justify-end mb-4">
-          <button
-            onClick={() => setIsDarkMode(!isDarkMode)}
-            className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-          >
-            {isDarkMode ? (
-              <Sun className="w-6 h-6 text-yellow-500" />
-            ) : (
-              <Moon className="w-6 h-6 text-gray-600" />
-            )}
-          </button>
-        </div>
-
-        <Navigation 
-          activeTab={activeTab} 
-          onTabChange={setActiveTab} 
-          isDarkMode={isDarkMode} 
-        />
-
-        {activeTab === 'cgpa' ? (
+  const renderContent = () => {
+    switch (activeTab) {
+      case 'waiver':
+        return <WaiverCalculator isDarkMode={isDarkMode} />;
+      case 'tuition':
+        return <TuitionCalculator isDarkMode={isDarkMode} />;
+      default:
+        return (
           <>
             <div className="text-center mb-8">
               <div className="inline-flex items-center justify-center w-16 h-16 bg-indigo-600 rounded-full mb-4">
@@ -216,9 +197,38 @@ function App() {
               </>
             )}
           </>
-        ) : (
-          <WaiverCalculator isDarkMode={isDarkMode} />
-        )}
+        );
+    }
+  };
+
+  return (
+    <div className={`min-h-screen transition-colors duration-200 ${
+      isDarkMode 
+        ? 'bg-gray-900 text-white' 
+        : 'bg-gradient-to-br from-indigo-100 to-purple-100'
+    }`}>
+      <Toaster position="top-right" />
+      <div className="container mx-auto px-4 py-8 max-w-4xl">
+        <div className="flex justify-end mb-4">
+          <button
+            onClick={() => setIsDarkMode(!isDarkMode)}
+            className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+          >
+            {isDarkMode ? (
+              <Sun className="w-6 h-6 text-yellow-500" />
+            ) : (
+              <Moon className="w-6 h-6 text-gray-600" />
+            )}
+          </button>
+        </div>
+
+        <Navigation 
+          activeTab={activeTab} 
+          onTabChange={setActiveTab} 
+          isDarkMode={isDarkMode} 
+        />
+
+        {renderContent()}
       </div>
     </div>
   );
