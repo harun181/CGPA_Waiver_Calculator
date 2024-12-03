@@ -40,3 +40,12 @@ export const calculateCGPA = (semesters: Course[][]): number => {
   const allCourses = semesters.flat();
   return calculateGPA(allCourses);
 };
+
+export const calculateTotalCredits = (semesters: Course[][]): number => {
+  return semesters.flat().reduce((sum, course) => {
+    if (course.credits && course.grade && course.name) {
+      return sum + Number(course.credits);
+    }
+    return sum;
+  }, 0);
+};

@@ -9,7 +9,8 @@ import PDFMarksheet from './components/PDFMarksheet';
 import ProgressChart from './components/ProgressChart';
 import ScholarshipInfo from './components/ScholarshipInfo';
 import WaiverCalculator from './components/WaiverCalculator';
-import { calculateCGPA } from './utils/gradeCalculator';
+import CGPAPredictor from './components/CGPAPredictor';
+import { calculateCGPA, calculateTotalCredits } from './utils/gradeCalculator';
 import { getFeedbackMessage } from './utils/feedback';
 
 const EMPTY_COURSE: Course = { name: '', grade: '', credits: '' };
@@ -99,6 +100,7 @@ function App() {
   };
 
   const cgpa = calculateCGPA(semesters.map((sem) => sem.courses));
+  const totalCredits = calculateTotalCredits(semesters.map((sem) => sem.courses));
   const hasValidCourses = semesters.some(semester => 
     semester.courses.some(course => course.name && course.grade && course.credits)
   );
@@ -195,13 +197,23 @@ function App() {
             </div>
 
             {hasValidCourses && (
-              <div className="mt-12">
-                <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-6 text-center">
-                  Performance Analytics
-                </h2>
-                <ProgressChart semesters={semesters} isDarkMode={isDarkMode} />
-                <ScholarshipInfo cgpa={cgpa} />
-              </div>
+              <>
+                <div className="mt-12">
+                  <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-6 text-center">
+                    Performance Analytics
+                  </h2>
+                  <ProgressChart semesters={semesters} isDarkMode={isDarkMode} />
+                  <ScholarshipInfo cgpa={cgpa} />
+                </div>
+
+                <div className="mt-12">
+                  <CGPAPredictor 
+                    currentCGPA={cgpa} 
+                    totalCredits={totalCredits}
+                    isDarkMode={isDarkMode}
+                  />
+                </div>
+              </>
             )}
           </>
         ) : (
