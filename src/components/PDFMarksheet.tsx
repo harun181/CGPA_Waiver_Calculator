@@ -11,6 +11,7 @@ import {
 import { Semester } from '../types';
 import { calculateGPA, calculateCGPA } from '../utils/gradeCalculator';
 import { getFeedbackMessage } from '../utils/feedback';
+import { getRetakeCourses } from '../utils/courseAnalyzer';
 
 const styles = StyleSheet.create({
   page: {
@@ -81,6 +82,24 @@ const styles = StyleSheet.create({
     color: '#1e40af',
     fontSize: 12,
   },
+  retakeSection: {
+    marginTop: 20,
+    padding: 10,
+    backgroundColor: '#fef2f2',
+    borderRadius: 4,
+  },
+  retakeTitle: {
+    fontSize: 14,
+    color: '#991b1b',
+    marginBottom: 5,
+    fontWeight: 'bold',
+  },
+  retakeRow: {
+    flexDirection: 'row',
+    marginTop: 5,
+    fontSize: 10,
+    color: '#991b1b',
+  },
   footer: {
     position: 'absolute',
     bottom: 30,
@@ -99,6 +118,8 @@ interface PDFMarksheetProps {
 const MarksheetDocument: React.FC<{ semesters: Semester[] }> = ({ semesters }) => {
   const cgpa = calculateCGPA(semesters.map((sem) => sem.courses));
   const feedback = getFeedbackMessage(cgpa);
+  const allCourses = semesters.flatMap(sem => sem.courses);
+  const retakeCourses = getRetakeCourses(allCourses);
 
   return (
     <Document>
@@ -149,6 +170,19 @@ const MarksheetDocument: React.FC<{ semesters: Semester[] }> = ({ semesters }) =
             Cumulative GPA (CGPA): {cgpa}
           </Text>
         </View>
+
+        {retakeCourses.length > 0 && (
+          <View style={styles.retakeSection}>
+            <Text style={styles.retakeTitle}>Recommended Retake Courses:</Text>
+            {retakeCourses.map((course, index) => (
+              <View key={index} style={styles.retakeRow}>
+                <Text style={styles.col1}>{course.name}</Text>
+                <Text style={styles.col2}>{course.grade}</Text>
+                <Text style={styles.col3}>{course.credits} credits</Text>
+              </View>
+            ))}
+          </View>
+        )}
 
         <Text style={styles.feedback}>{feedback}</Text>
 

@@ -8,6 +8,7 @@ import GradeTable from './components/GradeTable';
 import PDFMarksheet from './components/PDFMarksheet';
 import ProgressChart from './components/ProgressChart';
 import ScholarshipInfo from './components/ScholarshipInfo';
+import RetakeRecommendations from './components/RetakeRecommendations';
 import WaiverCalculator from './components/WaiverCalculator';
 import TuitionCalculator from './components/TuitionCalculator';
 import CGPAPredictor from './components/CGPAPredictor';
@@ -105,6 +106,7 @@ function App() {
   const hasValidCourses = semesters.some(semester => 
     semester.courses.some(course => course.name && course.grade && course.credits)
   );
+  const allCourses = semesters.flatMap(sem => sem.courses);
   const feedback = getFeedbackMessage(cgpa);
 
   const renderContent = () => {
@@ -186,6 +188,11 @@ function App() {
                   <ProgressChart semesters={semesters} isDarkMode={isDarkMode} />
                   <ScholarshipInfo cgpa={cgpa} />
                 </div>
+
+                <RetakeRecommendations 
+                  courses={allCourses}
+                  isDarkMode={isDarkMode}
+                />
 
                 <div className="mt-12">
                   <CGPAPredictor 
